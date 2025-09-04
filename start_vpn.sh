@@ -7,21 +7,11 @@
 # The 'pass.txt' file is used to store the authentication credentials for the VPN connection.
 # The script assumes that the 'pass.txt' file exists in the same directory as the script.
 # The script also assumes that the 'openvpn' command is available on the system.
-# The script is designed to be run from the command line with a single argument,
-# which is the path to the main directory containing the subdirectories with .ovpn files.
-# Example usage: ./start_vpn.sh /path/to/main/directory
+# The script is designed to be run from the command line.
 # Created by: Jesus Clemente
 
-# Read the path argument from the command line
-path=$1
-
-# Check if path argument is provided
-if [ -z "$path" ]; then
-  echo "Error: No se proporcionó una ruta."
-  echo "Uso: ./start_vpn.sh"
-  echo "Debe enviar algo asi: ./start_vpn.sh /ruta/a/carpeta/open_vpn_keys"
-  exit 1
-fi
+# Set the path to the keys directory
+path="keys"
 
 # Function to find and process subdirectories with .ovpn files
 function process_subdirectories_and_ovpn_files() {
@@ -61,7 +51,7 @@ function process_subdirectories_and_ovpn_files() {
     
     echo "Iniciando la conexión VPN utilizando '$selected_ovpn_file'..."
     
-    sudo openvpn --config "$selected_ovpn_file" --auth-user-pass "$path/pass.txt"
+    sudo openvpn --config "$selected_ovpn_file" --auth-user-pass "pass.txt"
     break  # Exit the loop after processing one .ovpn file
   done
 }
